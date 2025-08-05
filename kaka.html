@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered SQMS System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-color: #e5e7eb;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin: -20px -20px 40px -20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--border-color);
+            z-index: -1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            background-color: var(--bg-secondary);
+            padding: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step.completed .step-number {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 100px;
+        }
+
+        .card {
+            background-color: var(--bg-primary);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(37, 99, 235, 0.05);
+        }
+
+        .radio-option input[type="radio"],
+        .checkbox-option input[type="checkbox"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .radio-option.selected,
+        .checkbox-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .input-row label {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .input-row input {
+            width: 100px;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-row input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:disabled {
+            background-color: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: space-between;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .loading-screen {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .loading-icon {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .loading-steps {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .loading-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-step.active {
+            opacity: 1;
+        }
+
+        .loading-step-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .loading-step.active .loading-step-icon {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .recommendation-card {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .recommendation-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .recommendation-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .recommendation-icon.success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .recommendation-icon.warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .recommendation-items {
+            margin-left: 40px;
+            color: var(--text-secondary);
+        }
+
+        .recommendation-items li {
+            margin-bottom: 5px;
+        }
+
+        .recommendation-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            margin-left: 40px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .action-btn.approve {
+            color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .action-btn.modify {
+            color: var(--warning-color);
+            border-color: var(--warning-color);
+        }
+
+        .action-btn.reject {
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .final-package {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.05));
+            border-radius: 12px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .package-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .package-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .document-list {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+
+        .document-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .document-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .document-icon {
+            font-size: 1.5rem;
+        }
+
+        .compliance-score {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .ai-suggestion {
+            background-color: rgba(37, 99, 235, 0.05);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .ai-suggestion-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .follow-up-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-top: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .follow-up-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .step-label {
+                font-size: 0.75rem;
+                max-width: 80px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .input-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .input-row input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI-Powered SQMS System</h1>
+        <p>Set up your quality management system in minutes</p>
+    </div>
+
+    <div class="container">
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Welcome</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Core Questions</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">AI Analysis</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-label">Follow-up</div>
+            </div>
+            <div class="step" data-step="5">
+                <div class="step-number">5</div>
+                <div class="step-label">Review</div>
+            </div>
+            <div class="step" data-step="6">
+                <div class="step-number">6</div>
+                <div class="step-label">Professional Review</div>
+            </div>
+            <div class="step" data-step="7">
+                <div class="step-number">7</div>
+                <div class="step-label">Final Package</div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <!-- Screen 1: Welcome -->
+        <div class="screen active" id="screen1">
+            <div class="card">
+                <div style="text-align: center; padding: 40px 0;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Welcome to SQMS Setup Assistant</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 40px;">
+                        Let's set up your quality management system in minutes!
+                    </p>
+                    <button class="btn btn-primary" onclick="nextScreen()">
+                        Start Setup
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Core Questions -->
+        <div class="screen" id="screen2">
+            <!-- Question 1 -->
+            <div class="card question-card" data-question="1" style="display: block;">
+                <h3 class="question-title">What type of firm are you?</h3>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="firmType" value="sole">
+                        <span>Sole practitioner (just you)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="firmType" value="partnership">
+                        <span>Partnership (multiple partners)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="firmType" value="corporation">
+                        <span>Corporation</span>
+                    </label>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousScreen()">
+                        <span>←</span>
+                        Back
+                    </button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>
+                        Next Question
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="card question-card" data-question="2" style="display: none;">
+                <h3 class="question-title">How many people work at your firm?</h3>
+                <div class="input-group">
+                    <div class="input-row">
+                        <label>Partners:</label>
+                        <input type="number" id="partners" min="1" value="1">
+                    </div>
+                    <div class="input-row">
+                        <label>Staff:</label>
+                        <input type="number" id="staff" min="0" value="0">
+                    </div>
+                    <div class="input-row">
+                        <label>Offices:</label>
+                        <input type="number" id="offices" min="1" value="1">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">
+                        <span>←</span>
+                        Previous
+                    </button>
+                    <button class="btn btn-primary" onclick="nextQuestion()">
+                        Next Question
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="card question-card" data-question="3" style="display: none;">
+                <h3 class="question-title">What services do you provide?</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="services" value="audit">
+                        <span>Audit engagements</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="services" value="review">
+                        <span>Review engagements</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="services" value="compilation">
+                        <span>Compilation engagements</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="services" value="tax">
+                        <span>Tax services</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="services" value="consulting">
+                        <span>Consulting services</span>
+                    </label>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">
+                        <span>←</span>
+                        Previous
+                    </button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>
+                        Next Question
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Questions 4-9 (simplified for demo) -->
+            <div class="card question-card" data-question="4" style="display: none;">
+                <h3 class="question-title">What types of clients do you serve?</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="clients" value="private">
+                        <span>Private companies</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="clients" value="public">
+                        <span>Public companies</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="clients" value="nonprofit">
+                        <span>Non-profit organizations</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="clients" value="government">
+                        <span>Government entities</span>
+                    </label>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">
+                        <span>←</span>
+                        Previous
+                    </button>
+                    <button class="btn btn-primary" onclick="completeQuestions()">
+                        Complete Questions
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: AI Analysis -->
+        <div class="screen" id="screen3">
+            <div class="card">
+                <div class="loading-screen">
+                    <div class="loading-icon"></div>
+                    <h3 class="loading-text">🤖 AI is analyzing your responses</h3>
+                    <div class="loading-steps">
+                        <div class="loading-step" id="step1">
+                            <div class="loading-step-icon">•</div>
+                            <span>Identifying potential risks</span>
+                        </div>
+                        <div class="loading-step" id="step2">
+                            <div class="loading-step-icon">•</div>
+                            <span>Checking compliance gaps</span>
+                        </div>
+                        <div class="loading-step" id="step3">
+                            <div class="loading-step-icon">•</div>
+                            <span>Generating follow-up questions</span>
+                        </div>
+                        <div class="loading-step" id="step4">
+                            <div class="loading-step-icon">•</div>
+                            <span>Preparing recommendations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Follow-up Questions -->
+        <div class="screen" id="screen4">
+            <div class="card">
+                <h3 class="question-title">We need a few more details:</h3>
+                
+                <div style="margin-bottom: 30px;">
+                    <p style="font-weight: 600; margin-bottom: 10px;">
+                        How do you ensure adequate supervision with 3 partners?
+                    </p>
+                    <div class="ai-suggestion">
+                        <div class="ai-suggestion-header">
+                            <span>💡</span>
+                            <span>AI Suggestion</span>
+                        </div>
+                        <p>Based on your firm size, supervision coordination is important</p>
+                    </div>
+                    <textarea class="follow-up-input" rows="4" placeholder="Your answer..."></textarea>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <p style="font-weight: 600; margin-bottom: 10px;">
+                        What backup procedures do you have for your technology systems?
+                    </p>
+                    <div class="ai-suggestion">
+                        <div class="ai-suggestion-header">
+                            <span>💡</span>
+                            <span>AI Suggestion</span>
+                        </div>
+                        <p>With external IT vendors, backup procedures are critical</p>
+                    </div>
+                    <textarea class="follow-up-input" rows="4" placeholder="Your answer..."></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousScreen()">
+                        <span>←</span>
+                        Back
+                    </button>
+                    <button class="btn btn-primary" onclick="nextScreen()">
+                        Continue
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5: Review Recommendations -->
+        <div class="screen" id="screen5">
+            <div class="card">
+                <h2 style="margin-bottom: 30px;">📋 Your Quality Management Plan</h2>
+                
+                <div class="recommendation-card">
+                    <div class="recommendation-header">
+                        <div class="recommendation-icon success">✓</div>
+                        <div class="recommendation-title">Leadership & Governance</div>
+                    </div>
+                    <ul class="recommendation-items">
+                        <li>Designate quality leader</li>
+                        <li>Define partner roles</li>
+                    </ul>
+                    <div class="recommendation-actions">
+                        <button class="action-btn approve">✓ Approve</button>
+                        <button class="action-btn modify">✏️ Modify</button>
+                        <button class="action-btn reject">✕ Reject</button>
+                    </div>
+                </div>
+
+                <div class="recommendation-card">
+                    <div class="recommendation-header">
+                        <div class="recommendation-icon warning">⏳</div>
+                        <div class="recommendation-title">Technology Management</div>
+                    </div>
+                    <ul class="recommendation-items">
+                        <li>Document backup procedures</li>
+                        <li>Vendor oversight procedures</li>
+                    </ul>
+                    <div class="recommendation-actions">
+                        <button class="action-btn approve">✓ Approve</button>
+                        <button class="action-btn modify">✏️ Modify</button>
+                        <button class="action-btn reject">✕ Reject</button>
+                    </div>
+                </div>
+
+                <div class="recommendation-card">
+                    <div class="recommendation-header">
+                        <div class="recommendation-icon warning">⏳</div>
+                        <div class="recommendation-title">Quality Monitoring</div>
+                    </div>
+                    <ul class="recommendation-items">
+                        <li>Formal monitoring procedures</li>
+                        <li>Regular quality reviews</li>
+                    </ul>
+                    <div class="recommendation-actions">
+                        <button class="action-btn approve">✓ Approve</button>
+                        <button class="action-btn modify">✏️ Modify</button>
+                        <button class="action-btn reject">✕ Reject</button>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousScreen()">
+                        <span>←</span>
+                        Back
+                    </button>
+                    <button class="btn btn-primary" onclick="nextScreen()">
+                        Review & Approve
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 6: Professional Review -->
+        <div class="screen" id="screen6">
+            <div class="card">
+                <div style="text-align: center; padding: 40px 0;">
+                    <h2 style="margin-bottom: 30px;">👨‍💼 Professional Review Required</h2>
+                    <div class="loading-icon"></div>
+                    <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 30px;">
+                        A qualified professional will:
+                    </p>
+                    <ul style="text-align: left; max-width: 400px; margin: 0 auto; list-style: none;">
+                        <li style="margin-bottom: 15px;">• Review all AI suggestions</li>
+                        <li style="margin-bottom: 15px;">• Ensure compliance with AICPA</li>
+                        <li style="margin-bottom: 15px;">• Make final adjustments</li>
+                        <li style="margin-bottom: 15px;">• Approve the final plan</li>
+                    </ul>
+                    <p style="margin-top: 30px; color: var(--primary-color); font-weight: 600;">
+                        Review in Progress...
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 7: Final Package -->
+        <div class="screen" id="screen7">
+            <div class="card">
+                <div class="final-package">
+                    <div class="package-icon">📦</div>
+                    <h2 class="package-title">Your Complete SQMS Package</h2>
+                    
+                    <div class="document-list">
+                        <div class="document-item">
+                            <span class="document-icon">📘</span>
+                            <span>Quality Management Manual</span>
+                        </div>
+                        <div class="document-item">
+                            <span class="document-icon">📋</span>
+                            <span>Supervision Procedures</span>
+                        </div>
+                        <div class="document-item">
+                            <span class="document-icon">📋</span>
+                            <span>Training Program</span>
+                        </div>
+                        <div class="document-item">
+                            <span class="document-icon">📋</span>
+                            <span>Monitoring Procedures</span>
+                        </div>
+                        <div class="document-item">
+                            <span class="document-icon">📋</span>
+                            <span>Technology Backup Procedures</span>
+                        </div>
+                        <div class="document-item">
+                            <span class="document-icon">📊</span>
+                            <span>Compliance Report</span>
+                        </div>
+                    </div>
+
+                    <div class="compliance-score">
+                        ✓ 95% AICPA Compliance Score
+                    </div>
+
+                    <div class="btn-group" style="margin-top: 40px;">
+                        <button class="btn btn-primary" onclick="downloadDocuments()">
+                            📥 Download Documents
+                        </button>
+                        <button class="btn btn-primary" onclick="viewImplementationGuide()">
+                            📖 Implementation Guide
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentScreen = 1;
+        let currentQuestion = 1;
+        let totalQuestions = 4; // Simplified for demo
+        let formData = {
+            firmType: '',
+            partners: 1,
+            staff: 0,
+            offices: 1,
+            services: [],
+            clients: []
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to step indicators
+            document.querySelectorAll('.step').forEach(step => {
+                step.addEventListener('click', function() {
+                    const stepNum = parseInt(this.dataset.step);
+                    if (stepNum < currentScreen || this.classList.contains('completed')) {
+                        goToScreen(stepNum);
+                    }
+                });
+            });
+
+            // Add change handlers for radio buttons
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    // Update visual state
+                    document.querySelectorAll('.radio-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.parentElement.classList.add('selected');
+                    
+                    // Enable next button
+                    const card = this.closest('.question-card');
+                    const nextBtn = card.querySelector('.btn-primary');
+                    if (nextBtn) nextBtn.disabled = false;
+                    
+                    // Store data
+                    formData.firmType = this.value;
+                });
+            });
+
+            // Add change handlers for checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // Update visual state
+                    if (this.checked) {
+                        this.parentElement.classList.add('selected');
+                    } else {
+                        this.parentElement.classList.remove('selected');
+                    }
+                    
+                    // Enable next button if at least one is checked
+                    const card = this.closest('.question-card');
+                    const checkboxes = card.querySelectorAll('input[type="checkbox"]:checked');
+                    const nextBtn = card.querySelector('.btn-primary');
+                    if (nextBtn) nextBtn.disabled = checkboxes.length === 0;
+                    
+                    // Store data
+                    const name = this.name;
+                    const value = this.value;
+                    if (!formData[name]) formData[name] = [];
+                    
+                    if (this.checked) {
+                        formData[name].push(value);
+                    } else {
+                        formData[name] = formData[name].filter(v => v !== value);
+                    }
+                });
+            });
+
+            // Add input handlers for number inputs
+            document.querySelectorAll('input[type="number"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    formData[this.id] = parseInt(this.value) || 0;
+                });
+            });
+
+            // Update progress bar
+            updateProgress();
+        });
+
+        function updateProgress() {
+            const progress = ((currentScreen - 1) / 7) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateStepIndicator() {
+            document.querySelectorAll('.step').forEach((step, index) => {
+                const stepNum = index + 1;
+                step.classList.remove('active', 'completed');
+                
+                if (stepNum === currentScreen) {
+                    step.classList.add('active');
+                } else if (stepNum < currentScreen) {
+                    step.classList.add('completed');
+                }
+            });
+        }
+
+        function goToScreen(screenNum) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show target screen
+            document.getElementById('screen' + screenNum).classList.add('active');
+            
+            currentScreen = screenNum;
+            updateStepIndicator();
+            updateProgress();
+            
+            // Special handling for specific screens
+            if (screenNum === 3) {
+                startAIAnalysis();
+            } else if (screenNum === 6) {
+                startProfessionalReview();
+            }
+        }
+
+        function nextScreen() {
+            if (currentScreen < 7) {
+                goToScreen(currentScreen + 1);
+            }
+        }
+
+        function previousScreen() {
+            if (currentScreen > 1) {
+                goToScreen(currentScreen - 1);
+            }
+        }
+
+        function nextQuestion() {
+            const currentCard = document.querySelector(`.question-card[data-question="${currentQuestion}"]`);
+            currentCard.style.display = 'none';
+            
+            currentQuestion++;
+            const nextCard = document.querySelector(`.question-card[data-question="${currentQuestion}"]`);
+            if (nextCard) {
+                nextCard.style.display = 'block';
+            }
+        }
+
+        function previousQuestion() {
+            const currentCard = document.querySelector(`.question-card[data-question="${currentQuestion}"]`);
+            currentCard.style.display = 'none';
+            
+            currentQuestion--;
+            const prevCard = document.querySelector(`.question-card[data-question="${currentQuestion}"]`);
+            if (prevCard) {
+                prevCard.style.display = 'block';
+            }
+        }
+
+        function completeQuestions() {
+            nextScreen();
+        }
+
+        function startAIAnalysis() {
+            const steps = ['step1', 'step2', 'step3', 'step4'];
+            let currentStep = 0;
+            
+            const interval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    document.getElementById(steps[currentStep]).classList.add('active');
+                    const icon = document.querySelector(`#${steps[currentStep]} .loading-step-icon`);
+                    icon.innerHTML = '✓';
+                    currentStep++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        nextScreen();
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
+        function startProfessionalReview() {
+            setTimeout(() => {
+                nextScreen();
+            }, 3000);
+        }
+
+        function downloadDocuments() {
+            alert('Documents would be downloaded here. This is a prototype demonstration.');
+        }
+
+        function viewImplementationGuide() {
+            alert('Implementation guide would open here. This is a prototype demonstration.');
+        }
+
+        // Action button handlers
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('action-btn')) {
+                const card = e.target.closest('.recommendation-card');
+                
+                if (e.target.classList.contains('approve')) {
+                    card.style.borderColor = 'var(--success-color)';
+                    card.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
+                    e.target.innerHTML = '✓ Approved';
+                    e.target.disabled = true;
+                } else if (e.target.classList.contains('modify')) {
+                    const title = card.querySelector('.recommendation-title').textContent;
+                    const newValue = prompt(`Modify ${title}:`, '');
+                    if (newValue) {
+                        alert(`Modified: ${newValue}`);
+                    }
+                } else if (e.target.classList.contains('reject')) {
+                    if (confirm('Are you sure you want to reject this recommendation?')) {
+                        card.style.opacity = '0.5';
+                        card.style.borderColor = 'var(--danger-color)';
+                        e.target.innerHTML = '✕ Rejected';
+                        e.target.disabled = true;
+                    }
+                }
+            }
+        });
+
+        // Document item click handlers
+        document.querySelectorAll('.document-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const docName = this.querySelector('span:last-child').textContent;
+                alert(`Opening ${docName}... This is a prototype demonstration.`);
+            });
+        });
+
+        // Smooth scrolling
+        function smoothScroll() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Call smooth scroll on screen change
+        const originalGoToScreen = goToScreen;
+        goToScreen = function(screenNum) {
+            originalGoToScreen(screenNum);
+            smoothScroll();
+        };
+    </script>
+</body>
+</html>
