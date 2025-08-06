@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Powered SQMS System</title>
+    <title>SQMS Setup Assistant</title>
     <style>
         * {
             margin: 0;
@@ -34,7 +34,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -293,6 +293,172 @@
             width: 0%;
         }
 
+        .pattern-match {
+            background-color: rgba(37, 99, 235, 0.05);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .pattern-match h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .quality-objective {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .quality-objective:hover {
+            background-color: rgba(37, 99, 235, 0.05);
+        }
+
+        .objective-number {
+            width: 30px;
+            height: 30px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+
+        .risk-card {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .risk-card.high {
+            border-color: var(--danger-color);
+            background-color: rgba(239, 68, 68, 0.05);
+        }
+
+        .risk-card.medium {
+            border-color: var(--warning-color);
+            background-color: rgba(245, 158, 11, 0.05);
+        }
+
+        .risk-card.low {
+            border-color: var(--success-color);
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+
+        .risk-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .risk-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .risk-level {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .risk-level.high {
+            background-color: var(--danger-color);
+        }
+
+        .risk-level.medium {
+            background-color: var(--warning-color);
+        }
+
+        .risk-level.low {
+            background-color: var(--success-color);
+        }
+
+        .risk-details {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .risk-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .response-card {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .response-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .response-icon {
+            font-size: 1.5rem;
+        }
+
+        .response-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .response-details {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .response-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .response-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .checkbox-large {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
         .loading-screen {
             text-align: center;
             padding: 60px 0;
@@ -353,94 +519,48 @@
             color: white;
         }
 
-        .recommendation-card {
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .recommendation-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: var(--shadow);
-        }
-
-        .recommendation-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .recommendation-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .recommendation-icon.success {
+        .review-summary {
             background-color: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .review-summary h2 {
             color: var(--success-color);
+            margin-bottom: 20px;
         }
 
-        .recommendation-icon.warning {
-            background-color: rgba(245, 158, 11, 0.1);
-            color: var(--warning-color);
-        }
-
-        .recommendation-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .recommendation-items {
-            margin-left: 40px;
-            color: var(--text-secondary);
-        }
-
-        .recommendation-items li {
-            margin-bottom: 5px;
-        }
-
-        .recommendation-actions {
+        .summary-stats {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            margin-left: 40px;
+            justify-content: space-around;
+            margin: 30px 0;
         }
 
-        .action-btn {
-            padding: 6px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background-color: white;
-            cursor: pointer;
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
             font-size: 0.875rem;
-            transition: all 0.3s ease;
         }
 
-        .action-btn:hover {
-            background-color: var(--bg-secondary);
-        }
-
-        .action-btn.approve {
-            color: var(--success-color);
-            border-color: var(--success-color);
-        }
-
-        .action-btn.modify {
-            color: var(--warning-color);
-            border-color: var(--warning-color);
-        }
-
-        .action-btn.reject {
-            color: var(--danger-color);
-            border-color: var(--danger-color);
+        .compliance-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 20px;
         }
 
         .final-package {
@@ -465,7 +585,7 @@
 
         .document-list {
             text-align: left;
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto 30px;
         }
 
@@ -491,52 +611,11 @@
             font-size: 1.5rem;
         }
 
-        .compliance-score {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--success-color);
-            color: white;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-top: 20px;
-        }
-
-        .ai-suggestion {
-            background-color: rgba(37, 99, 235, 0.05);
-            border-left: 4px solid var(--primary-color);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .ai-suggestion-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-
-        .follow-up-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            margin-top: 15px;
-            transition: border-color 0.3s ease;
-        }
-
-        .follow-up-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
             }
+
             .step-label {
                 font-size: 0.75rem;
                 max-width: 80px;
@@ -559,13 +638,18 @@
             .input-row input {
                 width: 100%;
             }
+
+            .summary-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>AI-Powered SQMS System</h1>
-        <p>Set up your quality management system in minutes</p>
+        <h1>SQMS Setup Assistant</h1>
+        <p>Set up your quality management system in minutes using proven patterns</p>
     </div>
 
     <div class="container">
@@ -581,22 +665,26 @@
             </div>
             <div class="step" data-step="3">
                 <div class="step-number">3</div>
-                <div class="step-label">AI Analysis</div>
+                <div class="step-label">Pattern Match</div>
             </div>
             <div class="step" data-step="4">
                 <div class="step-number">4</div>
-                <div class="step-label">Follow-up</div>
+                <div class="step-label">Quality Plan</div>
             </div>
             <div class="step" data-step="5">
                 <div class="step-number">5</div>
-                <div class="step-label">Review</div>
+                <div class="step-label">Risk Review</div>
             </div>
             <div class="step" data-step="6">
                 <div class="step-number">6</div>
-                <div class="step-label">Professional Review</div>
+                <div class="step-label">Responses</div>
             </div>
             <div class="step" data-step="7">
                 <div class="step-number">7</div>
+                <div class="step-label">Professional Review</div>
+            </div>
+            <div class="step" data-step="8">
+                <div class="step-number">8</div>
                 <div class="step-label">Final Package</div>
             </div>
         </div>
@@ -612,8 +700,15 @@
                 <div style="text-align: center; padding: 40px 0;">
                     <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Welcome to SQMS Setup Assistant</h2>
                     <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 40px;">
-                        Let's set up your quality management system in minutes!
+                        Let's set up your quality management system using proven industry patterns!
                     </p>
+                    <div style="background-color: rgba(37, 99, 235, 0.05); padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 15px;">SQMS 2025</h3>
+                        <p style="color: var(--text-secondary);">
+                            We use proven patterns from hundreds of CPA firms to instantly match your firm profile 
+                            with the right quality management requirements.
+                        </p>
+                    </div>
                     <button class="btn btn-primary" onclick="nextScreen()">
                         Start Setup
                         <span>→</span>
@@ -659,15 +754,15 @@
                 <div class="input-group">
                     <div class="input-row">
                         <label>Partners:</label>
-                        <input type="number" id="partners" min="1" value="1">
+                        <input type="number" id="partners" min="1" value="3">
                     </div>
                     <div class="input-row">
                         <label>Staff:</label>
-                        <input type="number" id="staff" min="0" value="0">
+                        <input type="number" id="staff" min="0" value="8">
                     </div>
                     <div class="input-row">
                         <label>Offices:</label>
-                        <input type="number" id="offices" min="1" value="1">
+                        <input type="number" id="offices" min="1" value="2">
                     </div>
                 </div>
                 <div class="btn-group">
@@ -719,25 +814,87 @@
                 </div>
             </div>
 
-            <!-- Questions 4-9 (simplified for demo) -->
+            <!-- Question 4 -->
             <div class="card question-card" data-question="4" style="display: none;">
                 <h3 class="question-title">What types of clients do you serve?</h3>
                 <div class="checkbox-group">
                     <label class="checkbox-option">
-                        <input type="checkbox" name="clients" value="private">
+                        <input type="checkbox" name="clientTypes" value="private">
                         <span>Private companies</span>
                     </label>
                     <label class="checkbox-option">
-                        <input type="checkbox" name="clients" value="public">
-                        <span>Public companies</span>
+                        <input type="checkbox" name="clientTypes" value="public">
+                        <span>Public companies (SEC registrants)</span>
                     </label>
                     <label class="checkbox-option">
-                        <input type="checkbox" name="clients" value="nonprofit">
+                        <input type="checkbox" name="clientTypes" value="nonprofit">
                         <span>Non-profit organizations</span>
                     </label>
                     <label class="checkbox-option">
-                        <input type="checkbox" name="clients" value="government">
+                        <input type="checkbox" name="clientTypes" value="government">
                         <span>Government entities</span>
+                    </label>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">
+                        <span>←</span>
+                        Previous
+                    </button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>
+                        Next Question
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="card question-card" data-question="5" style="display: none;">
+                <h3 class="question-title">What technology setup do you use?</h3>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="technology" value="basic">
+                        <span>Basic (spreadsheets, basic software)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="technology" value="professional">
+                        <span>Professional (Caseware, ProSystem, etc.)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="technology" value="cloud">
+                        <span>Cloud-based (fully integrated cloud systems)</span>
+                    </label>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">
+                        <span>←</span>
+                        Previous
+                    </button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>
+                        Next Question
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="card question-card" data-question="6" style="display: none;">
+                <h3 class="question-title">Do you use external service providers?</h3>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="externalProviders" value="none">
+                        <span>No external providers</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="externalProviders" value="it-only">
+                        <span>IT support only</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="externalProviders" value="it-vendor">
+                        <span>IT vendor (comprehensive support)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="externalProviders" value="multiple">
+                        <span>Multiple external providers</span>
                     </label>
                 </div>
                 <div class="btn-group">
@@ -753,65 +910,49 @@
             </div>
         </div>
 
-        <!-- Screen 3: AI Analysis -->
+        <!-- Screen 3: Pattern Matching -->
         <div class="screen" id="screen3">
             <div class="card">
                 <div class="loading-screen">
                     <div class="loading-icon"></div>
-                    <h3 class="loading-text">🤖 AI is analyzing your responses</h3>
+                    <h3 class="loading-text">🔍 System is matching your profile</h3>
                     <div class="loading-steps">
                         <div class="loading-step" id="step1">
                             <div class="loading-step-icon">•</div>
-                            <span>Identifying potential risks</span>
+                            <span>Identifying firm type pattern</span>
                         </div>
                         <div class="loading-step" id="step2">
                             <div class="loading-step-icon">•</div>
-                            <span>Checking compliance gaps</span>
+                            <span>Mapping to quality requirements</span>
                         </div>
                         <div class="loading-step" id="step3">
                             <div class="loading-step-icon">•</div>
-                            <span>Generating follow-up questions</span>
+                            <span>Selecting relevant risks</span>
                         </div>
                         <div class="loading-step" id="step4">
                             <div class="loading-step-icon">•</div>
-                            <span>Preparing recommendations</span>
+                            <span>Preparing standard responses</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Screen 4: Follow-up Questions -->
+        <!-- Screen 4: Quality Management Plan -->
         <div class="screen" id="screen4">
             <div class="card">
-                <h3 class="question-title">We need a few more details:</h3>
-                
-                <div style="margin-bottom: 30px;">
-                    <p style="font-weight: 600; margin-bottom: 10px;">
-                        How do you ensure adequate supervision with 3 partners?
-                    </p>
-                    <div class="ai-suggestion">
-                        <div class="ai-suggestion-header">
-                            <span>💡</span>
-                            <span>AI Suggestion</span>
-                        </div>
-                        <p>Based on your firm size, supervision coordination is important</p>
-                    </div>
-                    <textarea class="follow-up-input" rows="4" placeholder="Your answer..."></textarea>
+                <div class="pattern-match">
+                    <h3 id="patternTitle">Pattern Match: Medium Partnership</h3>
+                    <p>Based on your profile, we've identified the quality management requirements for your firm</p>
                 </div>
 
-                <div style="margin-bottom: 30px;">
-                    <p style="font-weight: 600; margin-bottom: 10px;">
-                        What backup procedures do you have for your technology systems?
-                    </p>
-                    <div class="ai-suggestion">
-                        <div class="ai-suggestion-header">
-                            <span>💡</span>
-                            <span>AI Suggestion</span>
-                        </div>
-                        <p>With external IT vendors, backup procedures are critical</p>
-                    </div>
-                    <textarea class="follow-up-input" rows="4" placeholder="Your answer..."></textarea>
+                <h2 style="margin-bottom: 20px;">📋 Your Quality Management Plan</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    All 7 AICPA-required quality objectives are included:
+                </p>
+
+                <div id="objectivesList">
+                    <!-- Will be populated by JavaScript -->
                 </div>
 
                 <div class="btn-group">
@@ -820,64 +961,23 @@
                         Back
                     </button>
                     <button class="btn btn-primary" onclick="nextScreen()">
-                        Continue
+                        View Identified Risks
                         <span>→</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Screen 5: Review Recommendations -->
+        <!-- Screen 5: Risk Review -->
         <div class="screen" id="screen5">
             <div class="card">
-                <h2 style="margin-bottom: 30px;">📋 Your Quality Management Plan</h2>
-                
-                <div class="recommendation-card">
-                    <div class="recommendation-header">
-                        <div class="recommendation-icon success">✓</div>
-                        <div class="recommendation-title">Leadership & Governance</div>
-                    </div>
-                    <ul class="recommendation-items">
-                        <li>Designate quality leader</li>
-                        <li>Define partner roles</li>
-                    </ul>
-                    <div class="recommendation-actions">
-                        <button class="action-btn approve">✓ Approve</button>
-                        <button class="action-btn modify">✏️ Modify</button>
-                        <button class="action-btn reject">✕ Reject</button>
-                    </div>
-                </div>
+                <h2 style="margin-bottom: 30px;">⚠️ Quality Risks Identified</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                    Based on your firm profile, we've identified the following quality risks:
+                </p>
 
-                <div class="recommendation-card">
-                    <div class="recommendation-header">
-                        <div class="recommendation-icon warning">⏳</div>
-                        <div class="recommendation-title">Technology Management</div>
-                    </div>
-                    <ul class="recommendation-items">
-                        <li>Document backup procedures</li>
-                        <li>Vendor oversight procedures</li>
-                    </ul>
-                    <div class="recommendation-actions">
-                        <button class="action-btn approve">✓ Approve</button>
-                        <button class="action-btn modify">✏️ Modify</button>
-                        <button class="action-btn reject">✕ Reject</button>
-                    </div>
-                </div>
-
-                <div class="recommendation-card">
-                    <div class="recommendation-header">
-                        <div class="recommendation-icon warning">⏳</div>
-                        <div class="recommendation-title">Quality Monitoring</div>
-                    </div>
-                    <ul class="recommendation-items">
-                        <li>Formal monitoring procedures</li>
-                        <li>Regular quality reviews</li>
-                    </ul>
-                    <div class="recommendation-actions">
-                        <button class="action-btn approve">✓ Approve</button>
-                        <button class="action-btn modify">✏️ Modify</button>
-                        <button class="action-btn reject">✕ Reject</button>
-                    </div>
+                <div id="risksList">
+                    <!-- Will be populated by JavaScript -->
                 </div>
 
                 <div class="btn-group">
@@ -886,15 +986,40 @@
                         Back
                     </button>
                     <button class="btn btn-primary" onclick="nextScreen()">
-                        Review & Approve
+                        Review Responses
                         <span>→</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Screen 6: Professional Review -->
+        <!-- Screen 6: Response Review -->
         <div class="screen" id="screen6">
+            <div class="card">
+                <h2 style="margin-bottom: 30px;">📋 Recommended Responses</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                    Review and select the procedures to address your identified risks:
+                </p>
+
+                <div id="responsesList">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previousScreen()">
+                        <span>←</span>
+                        Back
+                    </button>
+                    <button class="btn btn-primary" onclick="nextScreen()">
+                        Submit for Review
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 7: Professional Review -->
+        <div class="screen" id="screen7">
             <div class="card">
                 <div style="text-align: center; padding: 40px 0;">
                     <h2 style="margin-bottom: 30px;">👨‍💼 Professional Review Required</h2>
@@ -903,8 +1028,9 @@
                         A qualified professional will:
                     </p>
                     <ul style="text-align: left; max-width: 400px; margin: 0 auto; list-style: none;">
-                        <li style="margin-bottom: 15px;">• Review all AI suggestions</li>
-                        <li style="margin-bottom: 15px;">• Ensure compliance with AICPA</li>
+                        <li style="margin-bottom: 15px;">• Review your selected risks</li>
+                        <li style="margin-bottom: 15px;">• Validate response selections</li>
+                        <li style="margin-bottom: 15px;">• Ensure AICPA compliance</li>
                         <li style="margin-bottom: 15px;">• Make final adjustments</li>
                         <li style="margin-bottom: 15px;">• Approve the final plan</li>
                     </ul>
@@ -915,47 +1041,82 @@
             </div>
         </div>
 
-        <!-- Screen 7: Final Package -->
-        <div class="screen" id="screen7">
+        <!-- Screen 8: Final Package -->
+        <div class="screen" id="screen8">
             <div class="card">
-                <div class="final-package">
+                <div class="review-summary">
+                    <h2>✅ Professional Review Complete</h2>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">Quality Objectives</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="riskCount">5</div>
+                            <div class="stat-label">Quality Risks</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="responseCount">5</div>
+                            <div class="stat-label">Response Procedures</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 20px;">
+                        <strong>Modifications Made:</strong><br>
+                        • Added quarterly vendor reviews<br>
+                        • Increased monitoring frequency<br>
+                        • Enhanced geographic coordination
+                    </p>
+                    <div class="compliance-badge">
+                        96% AICPA Compliance Score
+                    </div>
+                </div>
+
+                <div class="final-package" style="margin-top: 30px;">
                     <div class="package-icon">📦</div>
-                    <h2 class="package-title">Your Complete SQMS Package</h2>
+                    <h2 class="package-title"><span id="firmNameDisplay">Smith & Associates</span> SQMS Package</h2>
                     
                     <div class="document-list">
                         <div class="document-item">
-                            <span class="document-icon">📘</span>
-                            <span>Quality Management Manual</span>
+                            <span class="document-icon">📋</span>
+                            <span>Quality Management Manual (15 pages)</span>
                         </div>
                         <div class="document-item">
                             <span class="document-icon">📋</span>
-                            <span>Supervision Procedures</span>
+                            <span>Partner Supervision Procedures (8 pages)</span>
                         </div>
                         <div class="document-item">
                             <span class="document-icon">📋</span>
-                            <span>Training Program</span>
+                            <span>Technology Management Procedures (5 pages)</span>
                         </div>
                         <div class="document-item">
                             <span class="document-icon">📋</span>
-                            <span>Monitoring Procedures</span>
+                            <span>Quality Monitoring System (12 pages)</span>
                         </div>
                         <div class="document-item">
                             <span class="document-icon">📋</span>
-                            <span>Technology Backup Procedures</span>
+                            <span>Geographic Coordination Plan (6 pages)</span>
+                        </div>
+                        <div class="document-item">
+                            <span class="document-icon">📋</span>
+                            <span>External Vendor Oversight (4 pages)</span>
+                        </div>
+                        <div class="document-item">
+                            <span class="document-icon">📋</span>
+                            <span>Staff Training Program (10 pages)</span>
+                        </div>
+                        <div class="document-item">
+                            <span class="document-icon">📋</span>
+                            <span>Implementation Timeline (2 pages)</span>
                         </div>
                         <div class="document-item">
                             <span class="document-icon">📊</span>
-                            <span>Compliance Report</span>
+                            <span>Compliance Report (96% Score)</span>
                         </div>
-                    </div>
-
-                    <div class="compliance-score">
-                        ✓ 95% AICPA Compliance Score
                     </div>
 
                     <div class="btn-group" style="margin-top: 40px;">
                         <button class="btn btn-primary" onclick="downloadDocuments()">
-                            📥 Download Documents
+                            📥 Download All
                         </button>
                         <button class="btn btn-primary" onclick="viewImplementationGuide()">
                             📖 Implementation Guide
@@ -970,14 +1131,227 @@
         // Global variables
         let currentScreen = 1;
         let currentQuestion = 1;
-        let totalQuestions = 4; // Simplified for demo
+        let totalQuestions = 6; // Updated question count
+        let selectedRisks = [];
+        let selectedResponses = [];
         let formData = {
+            firmName: 'Smith & Associates',
             firmType: '',
-            partners: 1,
-            staff: 0,
-            offices: 1,
+            partners: 3,
+            staff: 8,
+            offices: 2,
             services: [],
-            clients: []
+            clientTypes: [],
+            technology: '',
+            externalProviders: '',
+            qualityManagement: 'basic',
+            monitoring: 'informal',
+            standards: ['aicpa']
+        };
+
+        // AICPA Quality Objectives (Standard for all firms)
+        const qualityObjectives = [
+            {
+                id: 'LG',
+                title: 'Leadership and Governance',
+                description: 'The firm demonstrates a commitment to quality through a culture that exists throughout the firm'
+            },
+            {
+                id: 'RER',
+                title: 'Relevant Ethical Requirements', 
+                description: 'The firm and its personnel comply with relevant ethical requirements, including independence'
+            },
+            {
+                id: 'AC',
+                title: 'Acceptance and Continuance',
+                description: 'The firm accepts or continues client relationships and engagements only when appropriate'
+            },
+            {
+                id: 'EP',
+                title: 'Engagement Performance',
+                description: 'Engagements are performed consistently and engagement reports are appropriate'
+            },
+            {
+                id: 'RS',
+                title: 'Resources',
+                description: 'The firm has appropriate resources to enable consistent performance of quality engagements'
+            },
+            {
+                id: 'IC',
+                title: 'Information and Communication',
+                description: 'The firm obtains, generates, or uses relevant, reliable, and timely information'
+            },
+            {
+                id: 'MR',
+                title: 'Monitoring and Remediation',
+                description: 'The firm monitors its system of quality management through ongoing evaluation'
+            }
+        ];
+
+        // Predefined Risk Patterns
+        const riskPatterns = {
+            'Small Firm': [
+                {
+                    id: 'LG-001',
+                    objective: 'LG',
+                    title: 'Lack of formal leadership structure',
+                    description: 'Single practitioner may lack formal quality management oversight',
+                    level: 'medium',
+                    aicpaReference: 'SQMS 3.10',
+                    reasons: ['Single practitioner structure', 'Limited oversight capacity', 'Need for self-monitoring procedures']
+                },
+                {
+                    id: 'RS-001',
+                    objective: 'RS', 
+                    title: 'Limited human resources',
+                    description: 'Small staff may lack specialized skills or adequate supervision',
+                    level: 'high',
+                    aicpaReference: 'SQMS 5.60',
+                    reasons: ['Small staff size', 'Limited specialization', 'Supervision challenges']
+                }
+            ],
+            'Medium Partnership': [
+                {
+                    id: 'LG-002',
+                    objective: 'LG',
+                    title: 'Partner coordination and responsibility',
+                    description: 'Multiple partners require clear quality management roles and coordination',
+                    level: 'high',
+                    aicpaReference: 'SQMS 3.10',
+                    reasons: ['You have multiple partners', 'Need clear quality management roles', 'Coordination required across partners']
+                },
+                {
+                    id: 'EP-001',
+                    objective: 'EP',
+                    title: 'Supervision across multiple partners',
+                    description: 'Ensuring consistent supervision and review across different partners',
+                    level: 'high', 
+                    aicpaReference: 'SQMS 5.40',
+                    reasons: ['Multiple partners managing engagements', 'Need consistent supervision standards', 'Quality coordination required']
+                },
+                {
+                    id: 'RS-002',
+                    objective: 'RS',
+                    title: 'Technology dependencies',
+                    description: 'Reliance on external IT vendors and professional software systems',
+                    level: 'medium',
+                    aicpaReference: 'SQMS 5.60',
+                    reasons: ['External IT vendor dependency', 'Professional software reliance', 'Need backup procedures']
+                },
+                {
+                    id: 'IC-001',
+                    objective: 'IC',
+                    title: 'Geographic coordination',
+                    description: 'Communication and coordination across multiple office locations',
+                    level: 'medium',
+                    aicpaReference: 'SQMS 5.70',
+                    reasons: ['Multiple office locations', 'Need consistent procedures', 'Communication between offices']
+                },
+                {
+                    id: 'MR-002',
+                    objective: 'MR',
+                    title: 'Informal monitoring procedures',
+                    description: 'Current informal monitoring needs formalization for compliance',
+                    level: 'high',
+                    aicpaReference: 'SQMS 6.20',
+                    reasons: ['Currently informal monitoring', 'AICPA requires formal procedures', 'Quality assurance needed']
+                }
+            ],
+            'Large Firm': [
+                {
+                    id: 'LG-003',
+                    objective: 'LG',
+                    title: 'Complex supervision hierarchy',
+                    description: 'Large firms require sophisticated quality management structure',
+                    level: 'high',
+                    aicpaReference: 'SQMS 3.10',
+                    reasons: ['Large firm complexity', 'Multiple management layers', 'Sophisticated oversight needed']
+                }
+            ]
+        };
+
+        // Predefined Response Mappings
+        const responseMappings = {
+            'LG-002': {
+                id: 'RESP-LG-002',
+                title: 'Leadership Structure and Roles',
+                icon: '👨‍💼',
+                description: 'Establish clear leadership structure and quality management roles',
+                procedures: [
+                    'Designate firm quality leader',
+                    'Define partner quality responsibilities',
+                    'Create governance structure',
+                    'Establish quality culture initiatives',
+                    'Document leadership roles and responsibilities'
+                ],
+                templates: ['Leadership Role Matrix', 'Quality Culture Assessment'],
+                training: '3 hours',
+                implementation: '3 weeks'
+            },
+            'EP-001': {
+                id: 'RESP-EP-001',
+                title: 'Partner Supervision Procedures',
+                icon: '📋',
+                description: 'Establish clear supervision procedures for multi-partner firms',
+                procedures: [
+                    'Designate engagement partner for each client',
+                    'Define review responsibilities by partner', 
+                    'Create supervision checklist',
+                    'Weekly partner coordination meetings',
+                    'Document supervision activities'
+                ],
+                templates: ['Supervision Checklist', 'Partner Review Documentation'],
+                training: '2 hours',
+                implementation: '2 weeks'
+            },
+            'RS-002': {
+                id: 'RESP-RS-002',
+                title: 'Technology Management Procedures',
+                icon: '💻',
+                description: 'Establish procedures for managing technology dependencies',
+                procedures: [
+                    'Document all software systems',
+                    'Create vendor contact list',
+                    'Establish backup procedures',
+                    'Test recovery procedures quarterly',
+                    'Identify alternative software options'
+                ],
+                templates: ['Software Inventory Template', 'Backup Procedures Checklist'],
+                training: '1 hour',
+                implementation: '1 week'
+            },
+            'IC-001': {
+                id: 'RESP-IC-001',
+                title: 'Geographic Coordination Plan',
+                icon: '🏢',
+                description: 'Coordinate quality management across multiple offices',
+                procedures: [
+                    'Regular inter-office meetings',
+                    'Shared procedures documentation',
+                    'Communication protocols',
+                    'Quality consistency checks',
+                    'Cross-office quality reviews'
+                ],
+                templates: ['Office Coordination Template', 'Communication Protocol'],
+                training: '2 hours',
+                implementation: '2 weeks'
+            },
+            'MR-002': {
+                id: 'RESP-MR-002',
+                title: 'Quality Monitoring System',
+                icon: '📊',
+                description: 'Implement formal quality monitoring and review procedures',
+                procedures: [
+                    'Monthly quality reviews',
+                    'Engagement quality checklist',
+                    'Partner peer reviews',
+                    'Annual internal inspection',
+                    'Quality improvement tracking'
+                ],
+                templates: ['Quality Monitoring Checklist', 'Peer Review Template'],
+                training: '3 hours',
+                implementation: '3 weeks'
+            }
         };
 
         // Initialize
@@ -996,8 +1370,9 @@
             document.querySelectorAll('input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     // Update visual state
-                    document.querySelectorAll('.radio-option').forEach(opt => {
-                        opt.classList.remove('selected');
+                    const radioGroup = document.querySelectorAll(`input[name="${this.name}"]`);
+                    radioGroup.forEach(r => {
+                        r.parentElement.classList.remove('selected');
                     });
                     this.parentElement.classList.add('selected');
                     
@@ -1007,7 +1382,7 @@
                     if (nextBtn) nextBtn.disabled = false;
                     
                     // Store data
-                    formData.firmType = this.value;
+                    formData[this.name] = this.value;
                 });
             });
 
@@ -1023,19 +1398,25 @@
                     
                     // Enable next button if at least one is checked
                     const card = this.closest('.question-card');
-                    const checkboxes = card.querySelectorAll('input[type="checkbox"]:checked');
-                    const nextBtn = card.querySelector('.btn-primary');
-                    if (nextBtn) nextBtn.disabled = checkboxes.length === 0;
+                    if (card) {
+                        const checkboxes = card.querySelectorAll('input[type="checkbox"]:checked');
+                        const nextBtn = card.querySelector('.btn-primary');
+                        if (nextBtn) nextBtn.disabled = checkboxes.length === 0;
+                    }
                     
                     // Store data
                     const name = this.name;
                     const value = this.value;
-                    if (!formData[name]) formData[name] = [];
-                    
-                    if (this.checked) {
-                        formData[name].push(value);
-                    } else {
-                        formData[name] = formData[name].filter(v => v !== value);
+                    if (name && value) {
+                        if (!formData[name]) formData[name] = [];
+                        
+                        if (this.checked) {
+                            if (!formData[name].includes(value)) {
+                                formData[name].push(value);
+                            }
+                        } else {
+                            formData[name] = formData[name].filter(v => v !== value);
+                        }
                     }
                 });
             });
@@ -1052,7 +1433,7 @@
         });
 
         function updateProgress() {
-            const progress = ((currentScreen - 1) / 7) * 100;
+            const progress = ((currentScreen - 1) / 8) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
         }
 
@@ -1084,14 +1465,28 @@
             
             // Special handling for specific screens
             if (screenNum === 3) {
-                startAIAnalysis();
+                startPatternMatching();
+            } else if (screenNum === 4) {
+                populateQualityObjectives();
+            } else if (screenNum === 5) {
+                populateRisks();
             } else if (screenNum === 6) {
+                populateResponses();
+            } else if (screenNum === 7) {
                 startProfessionalReview();
+            } else if (screenNum === 8) {
+                populateFinalPackage();
             }
+            
+            // Smooth scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
         function nextScreen() {
-            if (currentScreen < 7) {
+            if (currentScreen < 8) {
                 goToScreen(currentScreen + 1);
             }
         }
@@ -1125,10 +1520,17 @@
         }
 
         function completeQuestions() {
+            // Set default values for demo if not selected
+            if (!formData.firmType) formData.firmType = 'partnership';
+            if (!formData.services.length) formData.services = ['audit', 'review'];
+            if (!formData.clientTypes.length) formData.clientTypes = ['private'];
+            if (!formData.technology) formData.technology = 'professional';
+            if (!formData.externalProviders) formData.externalProviders = 'it-vendor';
+            
             nextScreen();
         }
 
-        function startAIAnalysis() {
+        function startPatternMatching() {
             const steps = ['step1', 'step2', 'step3', 'step4'];
             let currentStep = 0;
             
@@ -1144,7 +1546,7 @@
                         nextScreen();
                     }, 1000);
                 }
-            }, 1000);
+            }, 800);
         }
 
         function startProfessionalReview() {
@@ -1153,63 +1555,258 @@
             }, 3000);
         }
 
+        function populateQualityObjectives() {
+            const objectivesList = document.getElementById('objectivesList');
+            objectivesList.innerHTML = '';
+            
+            qualityObjectives.forEach((objective, index) => {
+                const div = document.createElement('div');
+                div.className = 'quality-objective';
+                div.innerHTML = `
+                    <div class="objective-number">${index + 1}</div>
+                    <div>
+                        <strong>${objective.title}</strong>
+                        <p style="font-size: 0.875rem; color: var(--text-secondary);">
+                            ${objective.description}
+                        </p>
+                    </div>
+                `;
+                objectivesList.appendChild(div);
+            });
+
+            // Update pattern title
+            const pattern = determinePattern();
+            document.getElementById('patternTitle').textContent = `Pattern Match: ${pattern}`;
+        }
+
+        function populateRisks() {
+            const pattern = determinePattern();
+            const risks = riskPatterns[pattern] || [];
+            selectedRisks = [...risks]; // Store selected risks
+            
+            const risksList = document.getElementById('risksList');
+            risksList.innerHTML = '';
+            
+            // Group risks by priority
+            const highRisks = risks.filter(r => r.level === 'high');
+            const mediumRisks = risks.filter(r => r.level === 'medium');
+            const lowRisks = risks.filter(r => r.level === 'low');
+            
+            if (highRisks.length > 0) {
+                const highHeader = document.createElement('h3');
+                highHeader.style.marginBottom = '20px';
+                highHeader.style.color = 'var(--danger-color)';
+                highHeader.textContent = 'HIGH PRIORITY';
+                risksList.appendChild(highHeader);
+                
+                highRisks.forEach(risk => {
+                    risksList.appendChild(createRiskCard(risk));
+                });
+            }
+            
+            if (mediumRisks.length > 0) {
+                const mediumHeader = document.createElement('h3');
+                mediumHeader.style.margin = '30px 0 20px';
+                mediumHeader.style.color = 'var(--warning-color)';
+                mediumHeader.textContent = 'MEDIUM PRIORITY';
+                risksList.appendChild(mediumHeader);
+                
+                mediumRisks.forEach(risk => {
+                    risksList.appendChild(createRiskCard(risk));
+                });
+            }
+            
+            if (lowRisks.length > 0) {
+                const lowHeader = document.createElement('h3');
+                lowHeader.style.margin = '30px 0 20px';
+                lowHeader.style.color = 'var(--success-color)';
+                lowHeader.textContent = 'LOW PRIORITY';
+                risksList.appendChild(lowHeader);
+                
+                lowRisks.forEach(risk => {
+                    risksList.appendChild(createRiskCard(risk));
+                });
+            }
+        }
+
+        function createRiskCard(risk) {
+            const div = document.createElement('div');
+            div.className = `risk-card ${risk.level}`;
+            div.innerHTML = `
+                <div class="risk-header">
+                    <div class="risk-title">
+                        <span>⚠️</span>
+                        <span>${risk.title}</span>
+                    </div>
+                    <span class="risk-level ${risk.level}">${risk.level.toUpperCase()}</span>
+                </div>
+                <div class="risk-details">
+                    <p><strong>Why this matters for your firm:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        ${risk.reasons.map(reason => `<li>${reason}</li>`).join('')}
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>AICPA Requirement:</strong> ${risk.aicpaReference}</p>
+                </div>
+                <div class="risk-actions">
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="checkbox" class="checkbox-large" checked data-risk-id="${risk.id}">
+                        <span>Keep this risk</span>
+                    </label>
+                </div>
+            `;
+            return div;
+        }
+
+        function populateResponses() {
+            const responsesList = document.getElementById('responsesList');
+            responsesList.innerHTML = '';
+            
+            // Get responses for selected risks
+            selectedResponses = [];
+            selectedRisks.forEach(risk => {
+                if (responseMappings[risk.id]) {
+                    selectedResponses.push(responseMappings[risk.id]);
+                }
+            });
+            
+            selectedResponses.forEach(response => {
+                responsesList.appendChild(createResponseCard(response));
+            });
+        }
+
+        function createResponseCard(response) {
+            const div = document.createElement('div');
+            div.className = 'response-card';
+            div.innerHTML = `
+                <div class="response-header">
+                    <span class="response-icon">${response.icon}</span>
+                    <h3 class="response-title">${response.title}</h3>
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">
+                    ${response.description}
+                </p>
+                <div class="response-details">
+                    <strong>Recommended Procedures:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        ${response.procedures.map(proc => `<li>${proc}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="response-meta">
+                    <div class="response-meta-item">
+                        <span>✅</span>
+                        <span>Templates: ${response.templates.join(', ')}</span>
+                    </div>
+                    <div class="response-meta-item">
+                        <span>🕐</span>
+                        <span>Training: ${response.training}</span>
+                    </div>
+                    <div class="response-meta-item">
+                        <span>📅</span>
+                        <span>Implementation: ${response.implementation}</span>
+                    </div>
+                </div>
+                <div class="risk-actions" style="margin-top: 20px;">
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="checkbox" class="checkbox-large" checked data-response-id="${response.id}">
+                        <span>Include this response</span>
+                    </label>
+                </div>
+            `;
+            return div;
+        }
+
+        function populateFinalPackage() {
+            // Update counts
+            document.getElementById('riskCount').textContent = selectedRisks.length;
+            document.getElementById('responseCount').textContent = selectedResponses.length;
+            
+            // Update firm name
+            const firmName = formData.firmType === 'partnership' ? 'Smith & Associates' : 
+                           formData.firmType === 'sole' ? 'Your Practice' : 'Your Firm';
+            document.getElementById('firmNameDisplay').textContent = firmName;
+        }
+
         function downloadDocuments() {
-            alert('Documents would be downloaded here. This is a prototype demonstration.');
+            // Simulate download
+            alert(`Downloading SQMS Package for ${document.getElementById('firmNameDisplay').textContent}...\n\nIn a real implementation, this would download a ZIP file containing:\n• Quality Management Manual\n• All procedures and templates\n• Implementation guides\n• Compliance reports`);
         }
 
         function viewImplementationGuide() {
-            alert('Implementation guide would open here. This is a prototype demonstration.');
+            // Simulate opening guide
+            alert('Opening Implementation Guide...\n\nWeek 1-2: Setup procedures and assign roles\nWeek 3-4: Train staff on new procedures\nWeek 5-6: Implement monitoring systems\nWeek 7-8: Full system operational and first review cycle');
         }
 
-        // Action button handlers
+        // Document item click handlers
         document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('action-btn')) {
-                const card = e.target.closest('.recommendation-card');
-                
-                if (e.target.classList.contains('approve')) {
-                    card.style.borderColor = 'var(--success-color)';
-                    card.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
-                    e.target.innerHTML = '✓ Approved';
-                    e.target.disabled = true;
-                } else if (e.target.classList.contains('modify')) {
-                    const title = card.querySelector('.recommendation-title').textContent;
-                    const newValue = prompt(`Modify ${title}:`, '');
-                    if (newValue) {
-                        alert(`Modified: ${newValue}`);
-                    }
-                } else if (e.target.classList.contains('reject')) {
-                    if (confirm('Are you sure you want to reject this recommendation?')) {
+            if (e.target.closest('.document-item')) {
+                const docName = e.target.closest('.document-item').querySelector('span:last-child').textContent;
+                alert(`Opening ${docName}...\n\nThis would display the full document in a new window or download it.`);
+            }
+        });
+
+        // Risk and response checkbox handlers
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'checkbox' && e.target.classList.contains('checkbox-large')) {
+                const card = e.target.closest('.risk-card, .response-card');
+                if (card) {
+                    if (e.target.checked) {
+                        card.style.opacity = '1';
+                    } else {
                         card.style.opacity = '0.5';
-                        card.style.borderColor = 'var(--danger-color)';
-                        e.target.innerHTML = '✕ Rejected';
-                        e.target.disabled = true;
+                    }
+                }
+                
+                // Update selected risks/responses
+                if (e.target.dataset.riskId) {
+                    const riskId = e.target.dataset.riskId;
+                    if (e.target.checked) {
+                        if (!selectedRisks.find(r => r.id === riskId)) {
+                            const pattern = determinePattern();
+                            const risk = riskPatterns[pattern].find(r => r.id === riskId);
+                            if (risk) selectedRisks.push(risk);
+                        }
+                    } else {
+                        selectedRisks = selectedRisks.filter(r => r.id !== riskId);
+                    }
+                }
+                
+                if (e.target.dataset.responseId) {
+                    const responseId = e.target.dataset.responseId;
+                    if (e.target.checked) {
+                        if (!selectedResponses.find(r => r.id === responseId)) {
+                            const response = Object.values(responseMappings).find(r => r.id === responseId);
+                            if (response) selectedResponses.push(response);
+                        }
+                    } else {
+                        selectedResponses = selectedResponses.filter(r => r.id !== responseId);
                     }
                 }
             }
         });
 
-        // Document item click handlers
-        document.querySelectorAll('.document-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const docName = this.querySelector('span:last-child').textContent;
-                alert(`Opening ${docName}... This is a prototype demonstration.`);
-            });
-        });
-
-        // Smooth scrolling
-        function smoothScroll() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+        // Pattern matching logic
+        function determinePattern() {
+            const partners = formData.partners || 1;
+            const staff = formData.staff || 0;
+            const totalSize = partners + staff;
+            
+            if (totalSize <= 3 || formData.firmType === 'sole') {
+                return 'Small Firm';
+            } else if (totalSize <= 15) {
+                return 'Medium Partnership';
+            } else {
+                return 'Large Firm';
+            }
         }
 
-        // Call smooth scroll on screen change
-        const originalGoToScreen = goToScreen;
-        goToScreen = function(screenNum) {
-            originalGoToScreen(screenNum);
-            smoothScroll();
-        };
+        // Update firm name display
+        function updateFirmName() {
+            const firmName = formData.firmType === 'partnership' ? 'Smith & Associates' : 
+                           formData.firmType === 'sole' ? 'Your Practice' : 'Your Firm';
+            document.querySelectorAll('.firm-name, #firmNameDisplay').forEach(el => {
+                el.textContent = firmName;
+            });
+        }
     </script>
 </body>
 </html>
