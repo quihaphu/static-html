@@ -47,7 +47,7 @@ DTEND;TZID=Asia/Ho_Chi_Minh:20260107T200000
 SUMMARY:Weekly Customer Webinar
 DESCRIPTION:Weekly webinar for customers. Link posted in description.
 LOCATION:Online Webinar
-ORGANIZER;CN:Webinar Host:mailto:webinar@example.com
+ORGANIZER;CN=Webinar Host:mailto:webinar@example.com
 RRULE:FREQ=WEEKLY;BYDAY=WE;COUNT=12
 END:VEVENT
 
@@ -70,9 +70,20 @@ DTEND;TZID=Asia/Ho_Chi_Minh:20260312T170000
 SUMMARY:Regional Developer Conference
 DESCRIPTION:Three-day conference with workshops and keynotes.
 LOCATION:Ho Chi Minh City Conference Center
-ORGANIZER;CN:Conf Organizer:mailto:conf@example.com
+ORGANIZER;CN=Conf Organizer:mailto:conf@example.com
 RRULE:FREQ=YEARLY;COUNT=1
 EXDATE;TZID=Asia/Ho_Chi_Minh:20260311T090000
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20251219T090300-006@yourorg.example
+DTSTAMP:20251219T090300Z
+DTSTART;VALUE=DATE:20251225
+DTEND;VALUE=DATE:20251226
+SUMMARY:Christmas Day
+DESCRIPTION:All-day public holiday observed.
+LOCATION:Vietnam
+CLASS:PUBLIC
 END:VEVENT
 
 END:VCALENDAR
