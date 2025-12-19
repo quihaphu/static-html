@@ -31,8 +31,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:20251222T090300-001@yourorg.example
 DTSTAMP:20251222T090300Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20251225T090000
-DTEND;TZID=Asia/Ho_Chi_Minh:20251225T103000
+DTSTART;TZID=Asia/Ho_Chi_Minh:20251228T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20251228T103000
 SUMMARY:a thuat Qui ha ne Monthly Team Sync
 DESCRIPTION:Qui Ha Monthly sync meeting. Agenda: updates, blockers, next steps.
 LOCATION:Online / Zoom
