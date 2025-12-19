@@ -19,10 +19,10 @@ END:VTIMEZONE
 BEGIN:VEVENT
 UID:20251219T090300-001@yourorg.example
 DTSTAMP:20251219T090300Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20260105T090000
-DTEND;TZID=Asia/Ho_Chi_Minh:20260105T103000
+DTSTART;TZID=Asia/Ho_Chi_Minh:20251225T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20251225T103000
 SUMMARY:Monthly Team Sync
-DESCRIPTION:Monthly sync meeting. Agenda: updates, blockers, next steps.
+DESCRIPTION:Qui Ha Monthly sync meeting. Agenda: updates, blockers, next steps.
 LOCATION:Online / Zoom
 ORGANIZER;CN=Organizer Name:mailto:organizer@example.com
 RRULE:FREQ=MONTHLY;BYDAY=MO;BYSETPOS=1
