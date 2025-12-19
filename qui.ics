@@ -1,0 +1,78 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//YourOrg//Public Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+NAME:Public Events Calendar
+DESCRIPTION:Public sample calendar hosted on GitHub
+URL:https://raw.githubusercontent.com/youruser/yourrepo/main/public-calendar.ics
+X-PUBLISHED-TTL:PT1H
+BEGIN:VTIMEZONE
+TZID:Asia/Ho_Chi_Minh
+BEGIN:STANDARD
+TZOFFSETFROM:+0700
+TZOFFSETTO:+0700
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+
+BEGIN:VEVENT
+UID:20251219T090300-001@yourorg.example
+DTSTAMP:20251219T090300Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260105T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260105T103000
+SUMMARY:Monthly Team Sync
+DESCRIPTION:Monthly sync meeting. Agenda: updates, blockers, next steps.
+LOCATION:Online / Zoom
+ORGANIZER;CN=Organizer Name:mailto:organizer@example.com
+RRULE:FREQ=MONTHLY;BYDAY=MO;BYSETPOS=1
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20251219T090300-002@yourorg.example
+DTSTAMP:20251219T090300Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260112T140000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260112T153000
+SUMMARY:Product Launch Planning
+DESCRIPTION:One-off planning session for the Q1 product launch.
+LOCATION:Office Meeting Room A
+ORGANIZER;CN=Product Lead:mailto:productlead@example.com
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20251219T090300-003@yourorg.example
+DTSTAMP:20251219T090300Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260107T190000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260107T200000
+SUMMARY:Weekly Customer Webinar
+DESCRIPTION:Weekly webinar for customers. Link posted in description.
+LOCATION:Online Webinar
+ORGANIZER;CN:Webinar Host:mailto:webinar@example.com
+RRULE:FREQ=WEEKLY;BYDAY=WE;COUNT=12
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20251219T090300-004@yourorg.example
+DTSTAMP:20251219T090300Z
+DTSTART;VALUE=DATE:20260214
+DTEND;VALUE=DATE:20260215
+SUMMARY:Public Holiday Observance
+DESCRIPTION:All-day public holiday observed.
+LOCATION:Vietnam
+CLASS:PUBLIC
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20251219T090300-005@yourorg.example
+DTSTAMP:20251219T090300Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260310T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260312T170000
+SUMMARY:Regional Developer Conference
+DESCRIPTION:Three-day conference with workshops and keynotes.
+LOCATION:Ho Chi Minh City Conference Center
+ORGANIZER;CN:Conf Organizer:mailto:conf@example.com
+RRULE:FREQ=YEARLY;COUNT=1
+EXDATE;TZID=Asia/Ho_Chi_Minh:20260311T090000
+END:VEVENT
+
+END:VCALENDAR
