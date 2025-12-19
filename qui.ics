@@ -21,7 +21,7 @@ UID:20251219T090300-001@yourorg.example
 DTSTAMP:20251219T090300Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20251225T090000
 DTEND;TZID=Asia/Ho_Chi_Minh:20251225T103000
-SUMMARY:Monthly Team Sync
+SUMMARY:Qui ha ne Monthly Team Sync
 DESCRIPTION:Qui Ha Monthly sync meeting. Agenda: updates, blockers, next steps.
 LOCATION:Online / Zoom
 ORGANIZER;CN=Organizer Name:mailto:organizer@example.com
