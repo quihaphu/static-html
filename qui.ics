@@ -98,4 +98,19 @@ LOCATION:Vietnam
 CLASS:PUBLIC
 END:VEVENT
 
+BEGIN:VEVENT
+UID:monitoring-7b9a2c1d-5d6f-4a8f-9f8e-3b7d2c0a1e11@yourdomain.com
+DTSTAMP:20251222T090000Z
+LAST-MODIFIED:20251222T090000Z
+SEQUENCE:1
+SUMMARY:Q.1 - Site Monitoring (Engagement ABC)
+DTSTART:20260105T100000Z
+DTEND:20260105T110000Z
+DESCRIPTION:Monitoring activity created in YourApp.\nOpen in app: https://app.yourdomain.com/monitoring/7b9a2c1d-5d6f-4a8f-9f8e-3b7d2c0a1e11
+URL:https://app.yourdomain.com/monitoring/7b9a2c1d-5d6f-4a8f-9f8e-3b7d2c0a1e11
+CATEGORIES:Monitoring,YourApp
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+
 END:VCALENDAR
