@@ -1,0 +1,39 @@
+BEGIN:VCALENDAR
+PRODID:-//YourCompany//Monitoring Activities//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Monitoring Activities
+X-WR-TIMEZONE:UTC
+
+BEGIN:VEVENT
+UID:monitoring-7b9a2c1d-5d6f-4a8f-9f8e-3b7d2c0a1e11@yourdomain.com
+DTSTAMP:20251222T090000Z
+LAST-MODIFIED:20251222T090000Z
+SEQUENCE:1
+SUMMARY:Q.1 - Site Monitoring (Engagement ABC)
+DTSTART:20260105T100000Z
+DTEND:20260105T110000Z
+DESCRIPTION:Monitoring activity created in YourApp.\nOpen in app: https://app.yourdomain.com/monitoring/7b9a2c1d-5d6f-4a8f-9f8e-3b7d2c0a1e11
+URL:https://app.yourdomain.com/monitoring/7b9a2c1d-5d6f-4a8f-9f8e-3b7d2c0a1e11
+CATEGORIES:Monitoring,YourApp
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+
+BEGIN:VEVENT
+UID:monitoring-0c4f8b22-3b2f-4b22-8c8e-4d1d3a6d9f30@yourdomain.com
+DTSTAMP:20251226T090000Z
+LAST-MODIFIED:20251222T090000Z
+SEQUENCE:3
+SUMMARY:Q.2 - Evidence Review (Engagement ABC)
+DTSTART:20260107T140000Z
+DTEND:20260107T150000Z
+DESCRIPTION:Review evidence package.\nOwner: John Doe\nOpen in app: https://app.yourdomain.com/monitoring/0c4f8b22-3b2f-4b22-8c8e-4d1d3a6d9f30
+URL:https://app.yourdomain.com/monitoring/0c4f8b22-3b2f-4b22-8c8e-4d1d3a6d9f30
+CATEGORIES:Monitoring,YourApp
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+
+END:VCALENDAR
