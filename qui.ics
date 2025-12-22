@@ -19,10 +19,10 @@ END:VTIMEZONE
 BEGIN:VEVENT
 UID:20251221T090300-001@yourorg.example
 DTSTAMP:20251221T090300Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20251225T090000
+DTSTART;TZID=Asia/Ho_Chi_Minh:20251229T090000
 DTEND;TZID=Asia/Ho_Chi_Minh:20251225T103000
 SUMMARY: 23/12/2025 09:20 quiha ne
-DESCRIPTION:22/12/2025 09:38 nè Qui Ha Monthly sync meeting. Agenda: updates, blockers, next steps.
+DESCRIPTION:22/12/2025 kaka 18:35 Qui Ha Monthly sync meeting. Agenda: updates, blockers, next steps.
 LOCATION:Online / Zoom
 ORGANIZER;CN=Organizer Name:mailto:organizer@example.com
 RRULE:FREQ=MONTHLY;BYDAY=MO;BYSETPOS=1
@@ -33,7 +33,7 @@ UID:20251222T090300-001@yourorg.example
 DTSTAMP:20251222T090300Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20251228T090000
 DTEND;TZID=Asia/Ho_Chi_Minh:20251228T103000
-SUMMARY:a thuat Qui ha ne Monthly Team Sync
+SUMMARY: 18:35 tit qui ha ne Monthly Team Sync
 DESCRIPTION:Qui Ha Monthly sync meeting. Agenda: updates, blockers, next steps.
 LOCATION:Online / Zoom
 ORGANIZER;CN=Organizer Name:mailto:organizer@example.com
